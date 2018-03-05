@@ -45,6 +45,21 @@ if __name__ == '__main__':
 
 	with tf.Session() as sess:
 
-		out = sess.run(op, {x: np.reshape(g, [1] + list(g.shape) + [1]), c: np.reshape(f, list(f.shape) + [1, 1])})
+		# Base gaussian filter
+		plot_surface(a.shape[0], a.shape[1], g)
 
+		# First derivative
+		out = sess.run(op, {x: np.reshape(g, [1] + list(g.shape) + [1]), c: np.reshape(f, list(f.shape) + [1, 1])})
+		plot_surface(a.shape[0], a.shape[1], out.squeeze())
+
+		# Second derivative
+		out = sess.run(op, {x: out, c: np.reshape(f, list(f.shape) + [1, 1])})
+		plot_surface(a.shape[0], a.shape[1], out.squeeze())
+
+		# Third derivative
+		out = sess.run(op, {x: out, c: np.reshape(f, list(f.shape) + [1, 1])})
+		plot_surface(a.shape[0], a.shape[1], out.squeeze())
+
+		# Fourth Derivative
+		out = sess.run(op, {x: out, c: np.reshape(f, list(f.shape) + [1, 1])})
 		plot_surface(a.shape[0], a.shape[1], out.squeeze())
